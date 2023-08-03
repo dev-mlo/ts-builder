@@ -4,6 +4,8 @@ import de.mlo.dev.tsbuilder.TsElementWriter;
 import de.mlo.dev.tsbuilder.elements.TsContext;
 import de.mlo.dev.tsbuilder.elements.TsElement;
 import de.mlo.dev.tsbuilder.elements.common.TsModifierList;
+import de.mlo.dev.tsbuilder.elements.decorator.TsDecorator;
+import de.mlo.dev.tsbuilder.elements.decorator.TsDecoratorList;
 import de.mlo.dev.tsbuilder.elements.type.ComplexType;
 import de.mlo.dev.tsbuilder.elements.type.OrType;
 import de.mlo.dev.tsbuilder.elements.type.TsTypes;
@@ -21,6 +23,7 @@ import java.util.Objects;
 @Getter
 public class TsConstructorParameter extends TsElement<TsConstructorParameter> {
 
+    private final TsDecoratorList decoratorList = new TsDecoratorList();
     private final TsModifierList modifierList = new TsModifierList();
     private final String name;
 
@@ -183,12 +186,36 @@ public class TsConstructorParameter extends TsElement<TsConstructorParameter> {
     }
 
     /**
+     * Adds a decorator to this parameter for example '@Inject'
+     * <pre>{@code
+     * constructor(@Inject(MAT_BOTTOM_SHEET_DATA) public data: {names: string[]}) { }
+     * }</pre>
+     *
+     * @param decorator A decorator for this parameter
+     * @return Instance of this {@link TsConstructorParameter}
+     */
+    public TsConstructorParameter addDecorator(TsDecorator decorator){
+        this.decoratorList.add(decorator);
+        return this;
+    }
+
+    /**
      * Adds the 'private' modifier to the parameter
      *
      * @return Instance of this {@link TsConstructorParameter}
      */
     public TsConstructorParameter setPrivate() {
         this.modifierList.setPrivate();
+        return this;
+    }
+
+    /**
+     * Adds the 'public' modifier to the parameter
+     *
+     * @return Instance of this {@link TsConstructorParameter}
+     */
+    public TsConstructorParameter setPublic(){
+        this.modifierList.setPublic();
         return this;
     }
 

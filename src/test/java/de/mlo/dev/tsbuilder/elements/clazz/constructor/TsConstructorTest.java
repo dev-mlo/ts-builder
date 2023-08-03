@@ -14,7 +14,7 @@ class TsConstructorTest {
         String result = constructor.build();
 
         assertThat(result).isEqualTo("""
-                constructor (){
+                constructor () {
                 }""");
     }
 
@@ -26,7 +26,7 @@ class TsConstructorTest {
         String result = constructor.build();
 
         assertThat(result).isEqualTo("""
-                constructor (name: string){
+                constructor (name: string) {
                 }""");
     }
 
@@ -39,7 +39,7 @@ class TsConstructorTest {
         String result = constructor.build();
 
         assertThat(result).isEqualTo("""
-                constructor (name: string, surname: string){
+                constructor (name: string, surname: string) {
                 }""");
     }
 
@@ -52,7 +52,7 @@ class TsConstructorTest {
         String result = constructor.build();
 
         assertThat(result).isEqualTo("""
-                constructor (name?: string, surname: string){
+                constructor (name?: string, surname: string) {
                 }""");
     }
 
@@ -69,7 +69,7 @@ class TsConstructorTest {
                 constructor (name: {
                   firstname: string,
                   surname: string
-                }){
+                }) {
                 }""");
     }
 
@@ -86,7 +86,7 @@ class TsConstructorTest {
                 constructor (name?: {
                   firstname: string,
                   surname: string
-                }){
+                }) {
                 }""");
     }
 }

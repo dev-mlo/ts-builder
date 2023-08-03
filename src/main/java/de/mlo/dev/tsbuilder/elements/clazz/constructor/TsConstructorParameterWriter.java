@@ -4,6 +4,7 @@ import de.mlo.dev.tsbuilder.TsElementWriter;
 import de.mlo.dev.tsbuilder.elements.TsContext;
 import de.mlo.dev.tsbuilder.elements.TsElement;
 import de.mlo.dev.tsbuilder.elements.common.TsModifierList;
+import de.mlo.dev.tsbuilder.elements.decorator.TsDecoratorList;
 
 public class TsConstructorParameterWriter extends TsElementWriter<TsConstructorParameter> {
 
@@ -13,11 +14,21 @@ public class TsConstructorParameterWriter extends TsElementWriter<TsConstructorP
 
     @Override
     public String build() {
+
+        String decorators = buildDecorators();
         String modifiers = buildModifiers();
         String name = buildName();
         String type = buildType();
 
-        return modifiers + name + ": " + type;
+        return decorators + modifiers + name + ": " + type;
+    }
+
+    private String buildDecorators(){
+        TsDecoratorList decoratorList = getElement().getDecoratorList();
+        if(!decoratorList.isEmpty()){
+            return decoratorList.build(getContext()) + " ";
+        }
+        return "";
     }
 
     private String buildModifiers(){

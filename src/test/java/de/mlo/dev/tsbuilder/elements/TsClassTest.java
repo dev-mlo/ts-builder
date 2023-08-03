@@ -78,7 +78,7 @@ class TsClassTest {
 
         assertThat(result).isEqualTo("""
                 class MyClass{
-                  constructor (){
+                  constructor () {
                   }
                 }""");
     }
@@ -95,7 +95,7 @@ class TsClassTest {
 
         assertThat(result).isEqualTo("""
                 class MyClass{
-                  constructor (stringParam: string, stringArrayParam: string[], optionalStringParam?: string){
+                  constructor (stringParam: string, stringArrayParam: string[], optionalStringParam?: string) {
                   }
                 }""");
     }
@@ -111,7 +111,7 @@ class TsClassTest {
 
         assertThat(result).isEqualTo("""
                 class MyClass{
-                  constructor (stringParam: string){
+                  constructor (stringParam: string) {
                     console.log(stringParam);
                   }
                 }""");

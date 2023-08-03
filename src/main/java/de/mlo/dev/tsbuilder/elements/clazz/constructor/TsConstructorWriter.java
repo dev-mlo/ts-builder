@@ -13,7 +13,7 @@ public class TsConstructorWriter extends TsElementWriter<TsConstructor> {
     public String build() {
         String parameter = buildParameter();
         String content = buildContent();
-        return "constructor (" + parameter + "){\n" + indent(content) + "}";
+        return "constructor (" + parameter + ") {\n" + indent(content) + "}";
     }
 
     private String buildParameter(){
