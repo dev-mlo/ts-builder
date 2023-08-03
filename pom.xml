@@ -107,6 +107,9 @@
                                 </goals>
                             </execution>
                         </executions>
+                        <configuration>
+                            <doclint>all,-missing</doclint>
+                        </configuration>
                     </plugin>
 
                     <!-- Signing -->
