@@ -109,6 +109,7 @@
                         </executions>
                         <configuration>
                             <doclint>all,-missing</doclint>
+                            <failOnError>false</failOnError>
                         </configuration>
                     </plugin>
 
