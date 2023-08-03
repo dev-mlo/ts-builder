@@ -13,7 +13,11 @@ public class TsDecoratorWriter extends TsElementWriter<TsDecorator> {
         String name = getElement().getName();
         String properties = buildProperties();
 
-        return name + properties;
+        String result = name + properties;
+        if(getElement().isPreventLineBreaks()){
+            result = result.indent(Integer.MIN_VALUE).replace("\n", "");
+        }
+        return result;
     }
 
     private String buildProperties(){

@@ -18,6 +18,15 @@ public class TsDecoratorProperty extends TsElement<TsDecoratorProperty> {
     private String name;
     private TsElement<?> value;
 
+    public TsDecoratorProperty setValue(TsElement<?> value) {
+        this.value = value;
+        return this;
+    }
+
+    public TsDecoratorProperty setValue(String literal){
+        return setValue(TsElement.literal(literal));
+    }
+
     public TsDecoratorProperty setStringValue(String value){
         return setValue(new StringValue(value));
     }

@@ -27,6 +27,7 @@ public class TsDecorator extends TsElement<TsDecorator> {
     private final TsDecoratorPropertyList decoratorPropertyList = new TsDecoratorPropertyList();
 
     private final String name;
+    private boolean preventLineBreaks;
 
     /**
      * Creates a new decorator instance.
@@ -53,6 +54,20 @@ public class TsDecorator extends TsElement<TsDecorator> {
         return this;
     }
 
+    /**
+     * This adds just a value to the decorator for example
+     * <pre>{@code
+     * constructor(@Inject(MAT_BOTTOM_SHEET_DATA) public data: {names: string[]}) { }
+     * }</pre>
+     * In this case the 'MAT_BOTTOM_SHEET_DATA' will be added
+     *
+     * @param literal The literal value to add as a value in the decorator
+     * @return Instance of this {@link TsDecorator}
+     */
+    public TsDecorator addValue(String literal){
+        return addProperty(new TsDecoratorProperty().setValue(literal));
+    }
+
     public TsDecorator addProperty(String name, String literalValue){
         return addProperty(new TsDecoratorProperty()
                 .setName(name)
@@ -63,5 +78,10 @@ public class TsDecorator extends TsElement<TsDecorator> {
         return addProperty(new TsDecoratorProperty()
                 .setName(name)
                 .setStringValue(value));
+    }
+
+    public TsDecorator preventLineBreaks(){
+        preventLineBreaks = true;
+        return this;
     }
 }
