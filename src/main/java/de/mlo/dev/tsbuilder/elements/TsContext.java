@@ -1,12 +1,19 @@
 package de.mlo.dev.tsbuilder.elements;
 
+import de.mlo.dev.tsbuilder.elements.imports.ITsImportWriter;
 import de.mlo.dev.tsbuilder.elements.imports.TsImportList;
+import de.mlo.dev.tsbuilder.elements.imports.TsImportWriter;
 import lombok.Getter;
+import lombok.Setter;
+import lombok.experimental.Accessors;
 
+@Accessors(chain = true)
+@Setter
 @Getter
 public class TsContext {
     private final TsElementList elementList = new TsElementList();
     private final TsImportList importList = new TsImportList();
+    private ITsImportWriter importWriter = new TsImportWriter();
     private int indent = 2;
 
     public void add(TsElement<?> element){
@@ -14,11 +21,7 @@ public class TsContext {
         this.importList.addAll(element.getImportList());
     }
 
-    public void setIndent(int indent) {
-        this.indent = indent;
-    }
-
     public String compileImports() {
-        return importList.build();
+        return importWriter.write(this, importList);
     }
 }

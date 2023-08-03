@@ -13,11 +13,8 @@ public class WithImportWriter extends TsElementWriter<TsElement<?>> {
 
     @Override
     public String build() {
-
         String content = delegate.build();
-
         String imports = getContext().compileImports();
-
         return imports + content;
     }
 }

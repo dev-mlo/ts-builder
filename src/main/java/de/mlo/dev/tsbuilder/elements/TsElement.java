@@ -79,7 +79,7 @@ public abstract class TsElement<E extends TsElement<E>> {
      * @return Your defined TypeScript elements as a string.
      */
     public String build(TsContext context) {
-        return wrap(createWriter(context)).build();
+        return createBeforeAndAfterElementsWriter(createWriter(context)).build();
     }
 
     /**
@@ -103,7 +103,12 @@ public abstract class TsElement<E extends TsElement<E>> {
      * @return Your defined TypeScript elements as a string.
      */
     public String buildWithImports(TsContext context) {
-        return new WithImportWriter(context, this, wrap(createWriter(context))).build().strip();
+        TsElementWriter<E> wrappedWriter = createBeforeAndAfterElementsWriter(createWriter(context));
+        return createImportWriter(context, wrappedWriter).build().strip();
+    }
+
+    protected TsElementWriter<TsElement<?>> createImportWriter(TsContext context, TsElementWriter<?> contentWriter){
+        return new WithImportWriter(context, this, contentWriter);
     }
 
     /**
@@ -115,7 +120,7 @@ public abstract class TsElement<E extends TsElement<E>> {
      * @return The {@link TsElementWriter} which will add the output for elements
      * before and after 'this' element
      */
-    private static <E extends TsElement<E>> TsElementWriter<E> wrap(TsElementWriter<E> delegate) {
+    private static <E extends TsElement<E>> TsElementWriter<E> createBeforeAndAfterElementsWriter(TsElementWriter<E> delegate) {
         return new TsElementWriter<>(delegate.getContext(), delegate.getElement()) {
             @Override
             public String build() {
