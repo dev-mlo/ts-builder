@@ -14,6 +14,7 @@ import java.util.Set;
 public class TsImport {
     private final Set<String> moduleNames = new LinkedHashSet<>();
     private final String fromPath;
+    private final Set<TsImport> dependencies = new LinkedHashSet<>();
 
     public TsImport(String moduleName, String fromPath) {
         this.moduleNames.add(moduleName);
@@ -22,6 +23,11 @@ public class TsImport {
 
     public TsImport addModuleName(String moduleName){
         this.moduleNames.add(moduleName);
+        return this;
+    }
+
+    public TsImport addDependency(TsImport dependency){
+        this.dependencies.add(dependency);
         return this;
     }
 }
