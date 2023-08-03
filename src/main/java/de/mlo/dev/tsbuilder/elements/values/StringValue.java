@@ -8,7 +8,7 @@ import lombok.Getter;
 
 @EqualsAndHashCode(callSuper = false)
 @Getter
-public class StringValue extends TsElement {
+public class StringValue extends TsElement<StringValue> {
 
     private final String value;
 
@@ -17,12 +17,7 @@ public class StringValue extends TsElement {
     }
 
     @Override
-    public TsElementWriter<?> createWriter(TsContext context) {
-        return new TsElementWriter<TsElement>(context, this) {
-            @Override
-            public String build() {
-                return "'" + value + "'";
-            }
-        };
+    public TsElementWriter<StringValue> createWriter(TsContext context) {
+        return TsElementWriter.wrap(context, this, () -> "'" + value + "'");
     }
 }

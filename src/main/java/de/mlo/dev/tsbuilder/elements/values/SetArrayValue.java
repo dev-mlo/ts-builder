@@ -14,9 +14,9 @@ import java.util.stream.Collectors;
 
 @EqualsAndHashCode(callSuper = false)
 @Getter
-public class SetArrayValue extends TsElement {
+public class SetArrayValue extends TsElement<SetArrayValue> {
 
-    private final Set<TsElement> values = new LinkedHashSet<>();
+    private final Set<TsElement<?>> values = new LinkedHashSet<>();
 
     public SetArrayValue addString(String value){
         return add(new StringValue(value));
@@ -31,13 +31,13 @@ public class SetArrayValue extends TsElement {
         return this;
     }
 
-    public SetArrayValue add(TsElement element){
+    public SetArrayValue add(TsElement<?> element){
         this.values.add(element);
         return this;
     }
 
     @Override
-    public TsElementWriter<?> createWriter(TsContext context) {
+    public TsElementWriter<SetArrayValue> createWriter(TsContext context) {
         return TsElementWriter.wrap(context, this, this::write);
     }
 

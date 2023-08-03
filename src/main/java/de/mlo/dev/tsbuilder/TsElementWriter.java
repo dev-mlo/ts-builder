@@ -11,7 +11,7 @@ import java.util.function.Function;
 import java.util.function.Supplier;
 
 @Getter
-public abstract class TsElementWriter<E extends TsElement> {
+public abstract class TsElementWriter<E extends TsElement<?>> {
     public final E element;
     private final TsContext context;
 
@@ -21,7 +21,7 @@ public abstract class TsElementWriter<E extends TsElement> {
         this.context.add(element);
     }
 
-    public static <E extends TsElement> TsElementWriter<E> wrap(TsContext context, E inElement, Supplier<String> writeFunction){
+    public static <E extends TsElement<E>> TsElementWriter<E> wrap(TsContext context, E inElement, Supplier<String> writeFunction) {
         return new TsElementWriter<E>(context, inElement) {
             @Override
             public String build() {
@@ -33,7 +33,7 @@ public abstract class TsElementWriter<E extends TsElement> {
         };
     }
 
-    public static <E extends TsElement> TsElementWriter<E> wrap(TsContext context, E inElement, Function<TsContext, String> writeFunction){
+    public static <E extends TsElement<E>> TsElementWriter<E> wrap(TsContext context, E inElement, Function<TsContext, String> writeFunction) {
         return new TsElementWriter<E>(context, inElement) {
             @Override
             public String build() {
@@ -45,7 +45,7 @@ public abstract class TsElementWriter<E extends TsElement> {
         };
     }
 
-    public static <E extends TsElement> TsElementWriter<E> wrap(TsContext context, E inElement, BiFunction<TsContext, E, String> writeFunction){
+    public static <E extends TsElement<E>> TsElementWriter<E> wrap(TsContext context, E inElement, BiFunction<TsContext, E, String> writeFunction) {
         return new TsElementWriter<E>(context, inElement) {
             @Override
             public String build() {
@@ -57,7 +57,7 @@ public abstract class TsElementWriter<E extends TsElement> {
         };
     }
 
-    public static TsElementWriter<Literal> literal(TsContext context, String literal){
+    public static TsElementWriter<Literal> literal(TsContext context, String literal) {
         return new TsElementWriter<>(context, new Literal(literal)) {
             @Override
             public String build() {
@@ -66,27 +66,27 @@ public abstract class TsElementWriter<E extends TsElement> {
         };
     }
 
-    public int getIndent(){
+    public int getIndent() {
         return getContext().getIndent();
     }
 
-    public String indent(String text){
+    public String indent(String text) {
         return text.indent(getIndent());
     }
 
     public abstract String build();
 
-    public String buildBeforeElementContent(){
+    public String buildBeforeElementContent() {
         TsElementList beforeElementContent = getElement().getBeforeElementContent();
-        if(!beforeElementContent.isEmpty()){
+        if (!beforeElementContent.isEmpty()) {
             return beforeElementContent.build(getContext()) + "\n";
         }
         return "";
     }
 
-    public String buildAfterElementContent(){
+    public String buildAfterElementContent() {
         TsElementList afterElementContent = getElement().getAfterElementContent();
-        if(!afterElementContent.isEmpty()){
+        if (!afterElementContent.isEmpty()) {
             return "\n" + afterElementContent.build(getContext());
         }
         return "";

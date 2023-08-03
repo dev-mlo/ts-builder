@@ -9,7 +9,7 @@ public class TsContext {
     private final TsImportList importList = new TsImportList();
     private int indent = 2;
 
-    public void add(TsElement element){
+    public void add(TsElement<?> element){
         this.elementList.add(element);
         this.importList.addAll(element.getImportList());
     }

@@ -8,23 +8,22 @@ import lombok.Getter;
 
 @EqualsAndHashCode(callSuper = false)
 @Getter
-public class AttributeValuePair extends TsElement {
+public class AttributeValuePair extends TsElement<AttributeValuePair> {
 
     private final String name;
-    private final TsElement value;
+    private final TsElement<?> value;
 
-    public AttributeValuePair(String name, TsElement value) {
+    public AttributeValuePair(String name, TsElement<?> value) {
         this.name = name;
         this.value = value;
     }
 
     @Override
-    public TsElementWriter<?> createWriter(TsContext context) {
-        return new TsElementWriter<TsElement>(context, this) {
-            @Override
-            public String build() {
-                return name + ": " + value.build(context);
-            }
-        };
+    public TsElementWriter<AttributeValuePair> createWriter(TsContext context) {
+        return TsElementWriter.wrap(context, this, this::write);
+    }
+
+    private String write(TsContext context){
+        return name + ": " + value.build(context);
     }
 }

@@ -25,7 +25,7 @@ public class TsDecoratorPropertyWriter extends TsElementWriter<TsDecoratorProper
     }
 
     private String buildValue(){
-        TsElement value = getElement().getValue();
+        TsElement<?> value = getElement().getValue();
         return value.build(getContext());
     }
 }

@@ -1,6 +1,6 @@
 package de.mlo.dev.tsbuilder.elements;
 
-public abstract class TsDeclarativeElement<E extends TsDeclarativeElement<E>> extends TsElement<E> implements ContentMerger<E>{
+public abstract class TsDeclarativeElement<E extends TsDeclarativeElement<E>> extends TsElement<E> {
     public TsDeclarativeElement() {
     }
 

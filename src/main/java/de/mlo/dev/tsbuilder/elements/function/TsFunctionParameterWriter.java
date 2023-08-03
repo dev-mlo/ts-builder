@@ -25,7 +25,7 @@ public class TsFunctionParameterWriter extends TsElementWriter<TsFunctionParamet
     }
 
     public String buildType(){
-        TsElement type = getElement().getType();
+        TsElement<?> type = getElement().getType();
         return type.build(getContext());
     }
 }

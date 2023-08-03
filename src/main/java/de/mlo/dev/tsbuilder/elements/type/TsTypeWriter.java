@@ -28,7 +28,7 @@ public class TsTypeWriter extends TsElementWriter<TsType> {
     }
 
     public String buildType(){
-        TsElement value = getElement().getValue();
+        TsElement<?> value = getElement().getValue();
         return value.build(getContext());
     }
 }

@@ -116,7 +116,7 @@ public abstract class TsElement<E extends TsElement<E>> {
      * before and after 'this' element
      */
     private static <E extends TsElement<E>> TsElementWriter<E> wrap(TsElementWriter<E> delegate) {
-        return new TsElementWriter<E>(delegate.getContext(), delegate.getElement()) {
+        return new TsElementWriter<>(delegate.getContext(), delegate.getElement()) {
             @Override
             public String build() {
                 String beforeElementContent = buildBeforeElementContent();

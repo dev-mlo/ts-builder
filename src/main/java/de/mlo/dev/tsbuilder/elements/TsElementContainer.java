@@ -4,7 +4,7 @@ import java.util.Objects;
 import java.util.function.BiConsumer;
 
 @SuppressWarnings("unchecked")
-public abstract class TsElementContainer<T extends TsElementContainer<T>> extends TsDeclarativeElement<T> implements ContentMerger<T>{
+public abstract class TsElementContainer<T extends TsElementContainer<T>> extends TsDeclarativeElement<T> {
 
     private BiConsumer<TsElementList, TsElementList> contentResolver = (TsElementList list, TsElementList c) -> {
         if(!list.equals(c)){

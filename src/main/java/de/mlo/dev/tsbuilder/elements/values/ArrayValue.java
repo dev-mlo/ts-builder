@@ -14,9 +14,9 @@ import java.util.stream.Collectors;
 
 @EqualsAndHashCode(callSuper = false)
 @Getter
-public class ArrayValue  extends TsElement {
+public class ArrayValue  extends TsElement<ArrayValue> {
 
-    private final List<TsElement> values = new ArrayList<>();
+    private final List<TsElement<?>> values = new ArrayList<>();
 
     public ArrayValue addString(String value){
         return add(new StringValue(value));
@@ -72,14 +72,13 @@ public class ArrayValue  extends TsElement {
     }
 
     @Override
-    public TsElementWriter<?> createWriter(TsContext context) {
-        return new TsElementWriter<TsElement>(context, this) {
-            @Override
-            public String build() {
-                return "[" + values.stream()
-                        .map(elem -> elem.build(context))
-                        .collect(Collectors.joining(", ")) + "]";
-            }
-        };
+    public TsElementWriter<ArrayValue> createWriter(TsContext context) {
+        return TsElementWriter.wrap(context, this, this::write);
+    }
+
+    private String write(TsContext context){
+        return "[" + values.stream()
+                .map(elem -> elem.build(context))
+                .collect(Collectors.joining(", ")) + "]";
     }
 }

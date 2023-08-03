@@ -39,7 +39,7 @@ public class TsFieldWriter extends TsElementWriter<TsField> {
     }
 
     private String buildType(){
-        TsElement type = getElement().getType();
+        TsElement<?> type = getElement().getType();
         if(type != null){
             return ": " + type.build(getContext());
         }
@@ -47,7 +47,7 @@ public class TsFieldWriter extends TsElementWriter<TsField> {
     }
 
     private String buildValue(){
-        TsElement value = getElement().getValue();
+        TsElement<?> value = getElement().getValue();
         if(value != null){
             return " = " + value.build();
         }

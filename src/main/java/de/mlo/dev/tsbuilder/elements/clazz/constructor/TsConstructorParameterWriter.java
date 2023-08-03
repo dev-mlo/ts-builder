@@ -37,7 +37,7 @@ public class TsConstructorParameterWriter extends TsElementWriter<TsConstructorP
     }
 
     private String buildType(){
-        TsElement type = getElement().getType();
+        TsElement<?> type = getElement().getType();
         return type.build(getContext());
     }
 }

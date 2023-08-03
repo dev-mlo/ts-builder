@@ -116,7 +116,7 @@ public class TsConstructor extends TsElement<TsConstructor> {
      * @param element The content to put into the constructor body
      * @return Instance of this {@link TsConstructor}
      */
-    public TsConstructor addContent(TsElement element) {
+    public TsConstructor addContent(TsElement<?> element) {
         this.contentList.add(element);
         return this;
     }

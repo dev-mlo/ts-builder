@@ -148,7 +148,7 @@ public class TsField extends TsDeclarativeElement<TsField> {
         return custom(name, type);
     }
 
-    public static TsField custom(String name, TsElement type) {
+    public static TsField custom(String name, TsElement<?> type) {
         return new TsField(name).setType(type);
     }
 
@@ -160,11 +160,11 @@ public class TsField extends TsDeclarativeElement<TsField> {
         return custom(name, type).setOptional();
     }
 
-    public static TsField optionalCustom(String name, TsElement type){
+    public static TsField optionalCustom(String name, TsElement<?> type){
         return custom(name, type).setOptional();
     }
 
-    public static TsField array(String name, TsElement type, ArrayValue arrayValue) {
+    public static TsField array(String name, TsElement<?> type, ArrayValue arrayValue) {
         return new TsField(name).setType(type).setValue(arrayValue);
     }
 
@@ -172,7 +172,7 @@ public class TsField extends TsDeclarativeElement<TsField> {
         return array(name, TsTypes.STRING_ARRAY, arrayValue);
     }
 
-    public TsField setType(TsElement type) {
+    public TsField setType(TsElement<?> type) {
         this.type = type;
         return this;
     }
@@ -261,7 +261,7 @@ public class TsField extends TsDeclarativeElement<TsField> {
      * @param value Any value you would like to apply. The value can be as complex as you wish.
      * @return Instance of this {@link TsField}
      */
-    public TsField setValue(TsElement value) {
+    public TsField setValue(TsElement<?> value) {
         this.value = value;
         return this;
     }

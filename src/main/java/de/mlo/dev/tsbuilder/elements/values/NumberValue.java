@@ -8,7 +8,7 @@ import lombok.Getter;
 
 @EqualsAndHashCode(callSuper = false)
 @Getter
-public class NumberValue  extends TsElement {
+public class NumberValue  extends TsElement<NumberValue> {
 
     private final String value;
 
@@ -21,12 +21,7 @@ public class NumberValue  extends TsElement {
     }
 
     @Override
-    public TsElementWriter<?> createWriter(TsContext context) {
-        return new TsElementWriter<TsElement>(context, this) {
-            @Override
-            public String build() {
-                return value;
-            }
-        };
+    public TsElementWriter<NumberValue> createWriter(TsContext context) {
+        return TsElementWriter.wrap(context, this, () -> value);
     }
 }

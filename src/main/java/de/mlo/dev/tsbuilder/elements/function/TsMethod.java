@@ -225,7 +225,7 @@ public class TsMethod extends TsElementContainer<TsMethod> {
      * @param element The content to add
      * @return Instance of this {@link TsMethod}
      */
-    public TsMethod addContent(TsElement element) {
+    public TsMethod addContent(TsElement<?> element) {
         this.contentList.add(element);
         return this;
     }
@@ -329,7 +329,7 @@ public class TsMethod extends TsElementContainer<TsMethod> {
      * @param returnType A new return type
      * @return Instance of this {@link TsMethod}
      */
-    public TsMethod addReturnType(TsElement returnType) {
+    public TsMethod addReturnType(TsElement<?> returnType) {
         this.returnTypeList.add(returnType);
         return this;
     }

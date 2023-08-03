@@ -9,7 +9,7 @@ import lombok.Getter;
 
 @EqualsAndHashCode(callSuper = false)
 @Getter
-public class GenericValue extends TsElement{
+public class GenericValue extends TsElement<GenericValue>{
     private final TsElementList genericTypeList = new TsElementList();
     private final String name;
 
@@ -17,13 +17,13 @@ public class GenericValue extends TsElement{
         this.name = name;
     }
 
-    public GenericValue addGeneric(TsElement element){
+    public GenericValue addGeneric(TsElement<?> element){
         this.genericTypeList.add(element);
         return this;
     }
 
     @Override
-    public TsElementWriter<?> createWriter(TsContext context) {
+    public TsElementWriter<GenericValue> createWriter(TsContext context) {
         return new GenericValueWriter(context, this);
     }
 }

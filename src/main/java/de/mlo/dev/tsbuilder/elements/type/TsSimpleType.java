@@ -25,7 +25,7 @@ public class TsSimpleType extends TsElement<TsSimpleType> {
 
     @Override
     public TsElementWriter<TsSimpleType> createWriter(TsContext context) {
-        return new TsElementWriter<TsSimpleType>(context, this) {
+        return new TsElementWriter<>(context, this) {
             @Override
             public String build() {
                 return getElement().name;
