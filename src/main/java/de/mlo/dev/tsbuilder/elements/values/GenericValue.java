@@ -17,6 +17,23 @@ public class GenericValue extends TsElement<GenericValue>{
         this.name = name;
     }
 
+    /**
+     * Add a new generic. Multiple generics will be connected with '|'.
+     * <pre>{@code
+     *     MyValue
+     *     --> addGeneric("string")
+     *     MyValue<string>
+     *     --> addGeneric("number")
+     *     MyValue<string | number>
+     * }</pre>
+     *
+     * @param literal The name of the generic type (can also be something complex)
+     * @return The instance of this {@link GenericValue}
+     */
+    public GenericValue addGeneric(String literal){
+        return addGeneric(TsElement.literal(literal));
+    }
+
     public GenericValue addGeneric(TsElement<?> element){
         this.genericTypeList.add(element);
         return this;
