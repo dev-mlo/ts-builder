@@ -66,8 +66,17 @@ public class ArrayValue  extends TsElement<ArrayValue> {
         return this;
     }
 
-    public ArrayValue add(TsElement element){
+    public ArrayValue add(TsElement<?> element){
         this.values.add(element);
+        return this;
+    }
+
+    public ArrayValue addAll(TsElement<?>... elements){
+        return addAll(Arrays.asList(elements));
+    }
+
+    public ArrayValue addAll(Collection<TsElement<?>> elements){
+        this.values.addAll(elements);
         return this;
     }
 

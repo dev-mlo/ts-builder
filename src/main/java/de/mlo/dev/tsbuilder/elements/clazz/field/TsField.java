@@ -20,6 +20,9 @@ import de.mlo.dev.tsbuilder.elements.values.StringValue;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 
+import java.util.Arrays;
+import java.util.Collection;
+
 @EqualsAndHashCode(callSuper = false)
 @Getter
 public class TsField extends TsDeclarativeElement<TsField> {
@@ -96,6 +99,14 @@ public class TsField extends TsDeclarativeElement<TsField> {
         return stringArray(name).setStringArrayValue(values);
     }
 
+    public static TsField stringArray(String name, Collection<String> values) {
+        return stringArray(name).setStringArrayValue(values);
+    }
+
+    public static TsField stringArray(String name, ArrayValue arrayValue) {
+        return array(name, TsTypes.STRING_ARRAY, arrayValue);
+    }
+
     public static TsField emptyStringArray(String name) {
         return stringArray(name, new String[0]);
     }
@@ -168,8 +179,39 @@ public class TsField extends TsDeclarativeElement<TsField> {
         return new TsField(name).setType(type).setValue(arrayValue);
     }
 
-    public static TsField stringArray(String name, ArrayValue arrayValue) {
-        return array(name, TsTypes.STRING_ARRAY, arrayValue);
+    public static TsField array(String name, TsElement<?> type, TsElement<?>... arrayValues) {
+        return array(name, type, new ArrayValue().addAll(arrayValues));
+    }
+
+    public static TsField array(String name, TsElement<?> type, Collection<TsElement<?>> arrayValues) {
+        return array(name, type).setArrayValue(arrayValues);
+    }
+
+    public static TsField emptyArray(String name, TsElement<?> type){
+        return array(name, type, new ArrayValue());
+    }
+
+    public static TsField any(String name){
+        return new TsField(name).setType(TsTypes.ANY);
+    }
+    public static TsField any(String name, TsElement<?> value){
+        return any(name).setValue(value);
+    }
+
+    public static TsField optionalAny(String name){
+        return any(name).setOptional();
+    }
+
+    public static TsField anyArray(String name){
+        return new TsField(name).setType(TsTypes.ANY_ARRAY);
+    }
+
+    public static TsField anyArray(String name, TsElement<?>... values){
+        return anyArray(name).setArrayValue(values);
+    }
+
+    public static TsField anyArray(String name, Collection<TsElement<?>> values){
+        return anyArray(name).setArrayValue(values);
     }
 
     public TsField setType(TsElement<?> type) {
@@ -197,6 +239,16 @@ public class TsField extends TsDeclarativeElement<TsField> {
      * @return Instance of this {@link TsField}
      */
     public TsField setStringArrayValue(String... values) {
+        return setStringArrayValue(Arrays.asList(values));
+    }
+
+    /**
+     * Applies a string array value to the field. If the type was unset, the type becomes 'string[]'.
+     *
+     * @param values A string array value. All values will be wrapped in single quotes
+     * @return Instance of this {@link TsField}
+     */
+    public TsField setStringArrayValue(Collection<String> values) {
         if (type == null) {
             setType(TsTypes.STRING_ARRAY);
         }
@@ -249,10 +301,28 @@ public class TsField extends TsDeclarativeElement<TsField> {
      * @return Instance of this {@link TsField}
      */
     public TsField setNumberArrayValues(Number... values) {
+        return setNumberArrayValues(Arrays.asList(values));
+    }
+
+    /**
+     * Applies a number array value to the field. If the type was unset, the type becomes 'number[]'.
+     *
+     * @param values A number array value
+     * @return Instance of this {@link TsField}
+     */
+    public TsField setNumberArrayValues(Collection<Number> values) {
         if (type == null) {
             setType(TsTypes.NUMBER_ARRAY);
         }
         return setValue(new ArrayValue().addNumbers(values));
+    }
+
+    public TsField setArrayValue(TsElement<?>... elements){
+        return setArrayValue(Arrays.asList(elements));
+    }
+
+    public TsField setArrayValue(Collection<TsElement<?>> elements){
+        return setValue(new ArrayValue().addAll(elements));
     }
 
     /**
