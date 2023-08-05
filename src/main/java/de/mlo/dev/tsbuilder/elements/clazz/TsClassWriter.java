@@ -14,7 +14,7 @@ public class TsClassWriter extends TsElementWriter<TsClass> {
     public String build() {
         String decorators = buildDecorators();
         String modifier = buildModifier();
-        String name = getElement().getName();
+        String name = buildName();
         String superClass = buildSuperClass();
         String implementz = buildImplements();
         String content = buildContent();
@@ -37,6 +37,14 @@ public class TsClassWriter extends TsElementWriter<TsClass> {
         TsModifierList modifierList = getElement().getModifierList();
         if(!modifierList.isEmpty()){
             return modifierList.build(getContext()) + " ";
+        }
+        return "";
+    }
+
+    private String buildName(){
+        String name = getElement().getName();
+        if(name != null && !name.isBlank()){
+            return name;
         }
         return "";
     }

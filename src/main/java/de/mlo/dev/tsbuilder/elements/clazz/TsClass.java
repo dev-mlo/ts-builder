@@ -7,6 +7,7 @@ import de.mlo.dev.tsbuilder.elements.clazz.field.TsField;
 import de.mlo.dev.tsbuilder.elements.common.TsModifierList;
 import de.mlo.dev.tsbuilder.elements.decorator.TsDecorator;
 import de.mlo.dev.tsbuilder.elements.decorator.TsDecoratorList;
+import de.mlo.dev.tsbuilder.elements.doc.TsComment;
 import de.mlo.dev.tsbuilder.elements.function.TsMethod;
 import de.mlo.dev.tsbuilder.elements.interfaces.TsInterface;
 import lombok.EqualsAndHashCode;
@@ -15,7 +16,6 @@ import lombok.Setter;
 import lombok.experimental.Accessors;
 
 import java.util.Arrays;
-import java.util.Objects;
 import java.util.Optional;
 
 /**
@@ -38,11 +38,15 @@ public class TsClass extends TsElementContainer<TsClass> {
     private final TsModifierList modifierList = new TsModifierList();
     private final TsImplementsList implementsList = new TsImplementsList();
     private final TsElementList contentList = new TsElementList();
-    private final String name;
+    private String name;
     private String superClassName;
 
+    public TsClass(){
+
+    }
+
     public TsClass(String name) {
-        this.name = Objects.requireNonNull(name);
+        this.name = name;
     }
 
     public TsClass addContent(String literal) {
@@ -184,12 +188,20 @@ public class TsClass extends TsElementContainer<TsClass> {
         return addContent(field);
     }
 
+    public TsClass addComment(String comment){
+        return addContent(new TsComment(comment));
+    }
+
     public TsClass addBlankLine(){
         return addContent(TsElement.literal(""));
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
     @Override
     public boolean isMergeRequired(TsClass other) {
-        return getName().equals(other.getName());
+        return name == null || name.equals(other.name);
     }
 }
