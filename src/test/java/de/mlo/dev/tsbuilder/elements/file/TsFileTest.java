@@ -192,4 +192,45 @@ class TsFileTest {
                   // Calculate some stuff
                 }""");
     }
+
+    @Test
+    void add_type(){
+        TsFile file = new TsFile("Authenticator")
+                .addType(new TsType("User")
+                        .setExport()
+                        .setValue(new ComplexType()
+                                .addStringAttribute("name")
+                                .addNumberAttribute("age")));
+
+        String result = file.build();
+
+        assertThat(result).isEqualTo("""
+                export type User = {
+                  name: string,
+                  age: number
+                }""");
+    }
+
+    @Test
+    void add_interface(){
+        TsFile file = new TsFile("MyCalculator")
+                .addInterface(new TsInterface("Calculator")
+                        .setExport()
+                        .addMethod(new TsMethodDeclaration("sum")
+                                .addNumberParameter("firstNumber")
+                                .addNumberParameter("secondNumber")
+                                .addNumberReturnType())
+                        .addMethod(new TsMethodDeclaration("divide")
+                                .addNumberParameter("minuend")
+                                .addNumberParameter("subtrahend")
+                                .addNumberReturnType()));
+
+        String result = file.build();
+
+        assertThat(result).isEqualTo("""
+                export interface Calculator {
+                  sum (firstNumber: number, secondNumber: number): number;
+                  divide (minuend: number, subtrahend: number): number;
+                }""");
+    }
 }

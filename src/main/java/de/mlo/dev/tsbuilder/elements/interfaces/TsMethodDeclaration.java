@@ -14,6 +14,15 @@ import lombok.Getter;
 
 import java.util.Collection;
 
+/**
+ * The method declaration (or function declaration) is the signature of a method.
+ * The signature contains the modifiers, the name, the parameters and
+ * the return types of the method.<br>
+ * Method declarations can be used to declare interfaces.<br>
+ *
+ * Example:
+ * <pre>{@code login (user: string, password: string): Observable<LoginState>;}</pre>
+ */
 @EqualsAndHashCode(callSuper = false)
 @Getter
 public class TsMethodDeclaration extends TsElement<TsMethodDeclaration> {
@@ -27,6 +36,35 @@ public class TsMethodDeclaration extends TsElement<TsMethodDeclaration> {
         this.name = name;
     }
 
+    /**
+     * Extracts the signature of a {@link TsMethod} and creates a {@link TsMethodDeclaration} object
+     * which can be used in {@link TsInterface} for example. This function extracts the current
+     * state of the given method. Further modification to the given method object will not be
+     * affect the created declaration object.<br>
+     * The following parts will be used for the declaration object:
+     * <ol>
+     *     <li>The name of the method</li>
+     *     <li>The modifiers</li>
+     *     <li>The parameters</li>
+     *     <li>The return types</li>
+     * </ol>
+     *
+     * Example:
+     * <pre>{@code
+     * TsMethodDeclaration methodDeclaration = TsMethodDeclaration.fromMethod(
+     *               new TsMethod("login")
+     *                       .addStringParameter("user")
+     *                       .addStringParameter("password")
+     *                       .addObservableReturnType("LoginState")
+     *                       .addContent("//Login logic here"));
+     * }</pre>
+     *
+     * Result:
+     * <pre>{@code login (user: string, password: string): Observable<LoginState>;}</pre>
+     *
+     * @param method The method
+     * @return A new instance of a {@link TsMethodDeclaration}
+     */
     public static TsMethodDeclaration fromMethod(TsMethod method){
         return new TsMethodDeclaration(method.getName())
                 .addModifiers(method.getModifierList())
@@ -34,11 +72,40 @@ public class TsMethodDeclaration extends TsElement<TsMethodDeclaration> {
                 .addReturnTypes(method.getReturnTypeList());
     }
 
-    public static TsMethodDeclaration fromFunction(TsFunction method){
-        return new TsMethodDeclaration(method.getName())
-                .addModifiers(method.getModifierList())
-                .addParameters(method.getParameterList())
-                .addReturnTypes(method.getReturnTypeList());
+    /**
+     * Extracts the signature of a {@link TsFunction} and creates a {@link TsMethodDeclaration} object
+     * which can be used in {@link TsInterface} for example. This function extracts the current
+     * state of the given function. Further modification to the given function object will not be
+     * affect the created declaration object.<br>
+     * The following parts will be used for the declaration object:
+     * <ol>
+     *     <li>The name of the function</li>
+     *     <li>The modifiers</li>
+     *     <li>The parameters</li>
+     *     <li>The return types</li>
+     * </ol>
+     *
+     * Example:
+     * <pre>{@code
+     * TsMethodDeclaration methodDeclaration = TsMethodDeclaration.fromFunction(
+     *               new TsFunction("login")
+     *                       .addStringParameter("user")
+     *                       .addStringParameter("password")
+     *                       .addObservableReturnType("LoginState")
+     *                       .addContent("//Login logic here"));
+     * }</pre>
+     *
+     * Result:
+     * <pre>{@code login (user: string, password: string): Observable<LoginState>;}</pre>
+     *
+     * @param function The function
+     * @return A new instance of a {@link TsMethodDeclaration}
+     */
+    public static TsMethodDeclaration fromFunction(TsFunction function){
+        return new TsMethodDeclaration(function.getName())
+                .addModifiers(function.getModifierList())
+                .addParameters(function.getParameterList())
+                .addReturnTypes(function.getReturnTypeList());
     }
 
     public TsMethodDeclaration addModifier(TsModifier modifier){

@@ -1,5 +1,7 @@
 package de.mlo.dev.tsbuilder.elements.interfaces;
 
+import de.mlo.dev.tsbuilder.elements.function.TsFunction;
+import de.mlo.dev.tsbuilder.elements.function.TsMethod;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -164,5 +166,35 @@ class TsMethodDeclarationTest {
         String result = declaration.build();
 
         assertThat(result).isEqualTo("fn(dateParam?: Date[]): void;");
+    }
+
+    @Test
+    void from_method(){
+        TsMethodDeclaration methodDeclaration = TsMethodDeclaration.fromMethod(
+                new TsMethod("login")
+                        .addStringParameter("user")
+                        .addStringParameter("password")
+                        .addObservableReturnType("LoginState")
+                        .addContent("//Login logic here"));
+
+        String result = methodDeclaration.build();
+
+        assertThat(result).isEqualTo("""
+                login (user: string, password: string): Observable<LoginState>;""");
+    }
+
+    @Test
+    void from_function(){
+        TsMethodDeclaration methodDeclaration = TsMethodDeclaration.fromFunction(
+                new TsFunction("login")
+                        .addStringParameter("user")
+                        .addStringParameter("password")
+                        .addObservableReturnType("LoginState")
+                        .addContent("//Login logic here"));
+
+        String result = methodDeclaration.build();
+
+        assertThat(result).isEqualTo("""
+                login (user: string, password: string): Observable<LoginState>;""");
     }
 }

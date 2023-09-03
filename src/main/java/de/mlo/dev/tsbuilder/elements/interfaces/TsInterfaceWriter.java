@@ -16,7 +16,7 @@ public class TsInterfaceWriter extends TsElementWriter<TsInterface> {
         String name = getElement().getName();
         String content = buildContent();
 
-        return modifier + "interface " + name + "{\n" + indent(content) + "}";
+        return modifier + "interface " + name + " {\n" + indent(content) + "}";
     }
 
     public String buildModifier(){

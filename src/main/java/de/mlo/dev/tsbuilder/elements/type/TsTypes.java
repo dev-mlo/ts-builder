@@ -1,5 +1,8 @@
 package de.mlo.dev.tsbuilder.elements.type;
 
+import de.mlo.dev.tsbuilder.elements.TsElement;
+import de.mlo.dev.tsbuilder.elements.values.ObservableType;
+
 public class TsTypes {
 
     public static final TsSimpleType ANY = new TsSimpleType("any");
@@ -14,4 +17,11 @@ public class TsTypes {
     public static final TsSimpleType DATE = new TsSimpleType("Date");
     public static final TsSimpleType DATE_ARRAY = new TsSimpleType("Date[]");
 
+    public static ObservableType observable(TsElement<?> observableType){
+        return new ObservableType(observableType);
+    }
+
+    public static ObservableType observable(String observableType){
+        return new ObservableType(observableType);
+    }
 }

@@ -17,7 +17,7 @@ public class TsMethodDeclarationWriter extends TsElementWriter<TsMethodDeclarati
         String name = getElement().getName();
         String parameter = buildParameter();
         String returnTypes = buildReturnTypes();
-        return modifier + name + "(" + parameter + ")" + returnTypes + ";";
+        return modifier + name + " (" + parameter + ")" + returnTypes + ";";
     }
 
     public String buildModifier(){

@@ -2,6 +2,7 @@ package de.mlo.dev.tsbuilder.elements.function;
 
 import de.mlo.dev.tsbuilder.elements.MergeException;
 import de.mlo.dev.tsbuilder.elements.clazz.TsClass;
+import de.mlo.dev.tsbuilder.elements.type.TsTypes;
 import org.junit.jupiter.api.Test;
 
 import java.util.function.BiConsumer;
@@ -119,6 +120,69 @@ class TsMethodTest {
                     // First
                     // Second
                   }
+                }""");
+    }
+
+    @Test
+    void string_return_type(){
+        TsMethod method = new TsMethod("foo").addStringReturnType();
+        String result = method.build();
+        assertThat(result).isEqualTo("""
+                foo (): string {
+                }""");
+    }
+
+    @Test
+    void number_return_type(){
+        TsMethod method = new TsMethod("foo").addNumberReturnType();
+        String result = method.build();
+        assertThat(result).isEqualTo("""
+                foo (): number {
+                }""");
+    }
+
+    @Test
+    void observable_return_type(){
+        TsMethod method = new TsMethod("foo").addObservableReturnType(TsTypes.STRING);
+        String result = method.build();
+        assertThat(result).isEqualTo("""
+                foo (): Observable<string> {
+                }""");
+    }
+
+    @Test
+    void observable_return_type_with_literal_type(){
+        TsMethod method = new TsMethod("foo").addObservableReturnType("User");
+        String result = method.build();
+        assertThat(result).isEqualTo("""
+                foo (): Observable<User> {
+                }""");
+    }
+
+    @Test
+    void optional_return_type(){
+        TsMethod method = new TsMethod("foo").setOptional(true);
+        String result = method.build();
+        assertThat(result).isEqualTo("""
+                foo (): undefined {
+                }""");
+    }
+
+    @Test
+    void string_parameter(){
+        TsMethod method = new TsMethod("foo").addStringParameter("bar");
+        String result = method.build();
+        assertThat(result).isEqualTo("""
+                foo (bar: string) {
+                }""");
+    }
+
+    @Test
+    void optional_string_parameter(){
+        TsMethod method = new TsMethod("foo").addOptionalStringParameter("bar");
+        String result = method.build();
+        assertThat(result).isEqualTo("""
+                foo (bar?: string) {
                 }""");
     }
 }

@@ -63,7 +63,7 @@ class TsFunctionTest {
         TsFunction second = new TsFunction("fn")
                 .addContent("// Comment 2");
 
-        TsFunction mergedFunction = first.mergeContent(second);
+        TsFunction mergedFunction = first.merge(second);
         String result = mergedFunction.build();
 
         assertThat(result).isEqualTo("""

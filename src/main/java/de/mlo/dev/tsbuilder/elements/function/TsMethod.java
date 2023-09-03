@@ -8,6 +8,7 @@ import de.mlo.dev.tsbuilder.elements.decorator.TsDecorator;
 import de.mlo.dev.tsbuilder.elements.decorator.TsDecoratorList;
 import de.mlo.dev.tsbuilder.elements.interfaces.TsMethodDeclaration;
 import de.mlo.dev.tsbuilder.elements.type.ComplexType;
+import de.mlo.dev.tsbuilder.elements.type.TsTypes;
 import de.mlo.dev.tsbuilder.elements.values.Literal;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -137,10 +138,42 @@ public class TsMethod extends TsElementContainer<TsMethod> {
         return this;
     }
 
+    /**
+     * Adds a string parameter to the method signature.
+     * <hr>
+     * Example:
+     * <pre>{@code
+     * TsMethod method = new TsMethod("foo").addStringParameter("bar");
+     * String result = method.build();
+     * }</pre>
+     * Result:
+     * <pre>{@code
+     * foo (bar: string) {
+     * }}</pre>
+     *
+     * @param name The name of the parameter
+     * @return Instance of this method
+     */
     public TsMethod addStringParameter(String name) {
         return addParameter(TsFunctionParameter.string(name));
     }
 
+    /**
+     * Adds an optional string parameter to the method signature.
+     * <hr>
+     * Example:
+     * <pre>{@code
+     * TsMethod method = new TsMethod("foo").addStringParameter("bar");
+     * String result = method.build();
+     * }</pre>
+     * Result:
+     * <pre>{@code
+     * foo (bar?: string) {
+     * }}</pre>
+     *
+     * @param name The name of the parameter
+     * @return Instance of this method
+     */
     public TsMethod addOptionalStringParameter(String name) {
         return addParameter(TsFunctionParameter.optionalString(name));
     }
@@ -347,7 +380,7 @@ public class TsMethod extends TsElementContainer<TsMethod> {
      * @return Instance of this {@link TsMethod}
      */
     public TsMethod addReturnType(TsFunctionReturnType returnType) {
-        return addReturnType((TsElement) returnType);
+        return addReturnType((TsElement<?>) returnType);
     }
 
     /**
@@ -386,6 +419,102 @@ public class TsMethod extends TsElementContainer<TsMethod> {
         return this;
     }
 
+    /**
+     * Add the return type 'string' to this method.
+     * <hr>
+     * Example:
+     * <pre>{@code
+     * TsMethod method = new TsMethod("foo").addStringReturnType();
+     * String result = method.build();
+     * }</pre>
+     *
+     * Result:
+     * <pre>{@code
+     * foo (): string {
+     * }}</pre>
+     *
+     * @return Instance of this method
+     */
+    public TsMethod addStringReturnType(){
+        return addReturnType(TsTypes.STRING);
+    }
+
+    /**
+     * Add the return type 'number' to this method.
+     * <hr>
+     * Example:
+     * <pre>{@code
+     * TsMethod method = new TsMethod("foo").addNumberReturnType();
+     * String result = method.build();
+     * }</pre>
+     *
+     * Result:
+     * <pre>{@code
+     * foo (): number {
+     * }}</pre>
+     *
+     * @return Instance of this method
+     */
+    public TsMethod addNumberReturnType(){
+        return addReturnType(TsTypes.NUMBER);
+    }
+
+    /**
+     * Add the return type 'Observable' to this method.
+     * <hr>
+     * Example:
+     * <pre>{@code
+     * TsMethod method = new TsMethod("foo").addObservableReturnType(TsSimpleTypes.STRING);
+     * String result = method.build();
+     * }</pre>
+     *
+     * Result:
+     * <pre>{@code
+     * foo (): Observable<string> {
+     * }}</pre>
+     *
+     * @return Instance of this method
+     */
+    public TsMethod addObservableReturnType(TsElement<?> observableType){
+        return addReturnType(TsTypes.observable(observableType));
+    }
+
+    /**
+     * Add the return type 'Observable' to this method.
+     * <hr>
+     * Example:
+     * <pre>{@code
+     * TsMethod method = new TsMethod("foo").addObservableReturnType("string");
+     * String result = method.build();
+     * }</pre>
+     *
+     * Result:
+     * <pre>{@code
+     * foo (): Observable<string> {
+     * }}</pre>
+     *
+     * @return Instance of this method
+     */
+    public TsMethod addObservableReturnType(String observableType){
+        return addReturnType(TsTypes.observable(observableType));
+    }
+
+    /**
+     * Add the return type 'undefined' to this method.
+     * <hr>
+     * Example:
+     * <pre>{@code
+     * TsMethod method = new TsMethod("foo").setOptional();
+     * String result = method.build();
+     * }</pre>
+     *
+     * Result:
+     * <pre>{@code
+     * foo (): undefined {
+     * }}</pre>
+     *
+     * @return Instance of this method
+     */
     public TsMethod setOptional(boolean optional){
         getReturnTypeList().setOptional(optional);
         return this;

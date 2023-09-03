@@ -39,10 +39,59 @@ public class TsFile extends TsElementContainer<TsFile> {
         return this;
     }
 
+    /**
+     * Adds a new Type to the file<br>
+     * Example:
+     * <pre>{@code
+     * TsFile file = new TsFile("Authenticator")
+     *             .addType(new TsType("User")
+     *                     .setExport()
+     *                     .setValue(new ComplexType()
+     *                             .addStringAttribute("name")
+     *                             .addNumberAttribute("age")));
+     * }}</pre>
+     *
+     * Result:
+     * <pre>
+     * type User = {
+     *     name: string,
+     *     age: number,
+     * }
+     * </pre>
+     * @param type A type
+     * @return The instance of this {@link TsFile} object
+     */
     public TsFile addType(TsType type){
         return add(type);
     }
 
+    /**
+     * Adds a new interface to the file<br>
+     * Example:
+     *
+     * <pre>{@code
+     * TsFile file = new TsFile("MyCalculator")
+     *         .addInterface(new TsInterface("Calculator")
+     *                 .setExport()
+     *                 .addMethod(new TsMethodDeclaration("sum")
+     *                         .addNumberParameter("firstNumber")
+     *                         .addNumberParameter("secondNumber")
+     *                         .addNumberReturnType())
+     *                 .addMethod(new TsMethodDeclaration("divide")
+     *                         .addNumberParameter("minuend")
+     *                         .addNumberParameter("subtrahend")
+     *                         .addNumberReturnType()));
+     * }</pre>
+     *
+     * Result:
+     * <pre>{@code
+     * export interface Calculator {
+     *   sum (firstNumber: number, secondNumber: number): number;
+     *   divide (minuend: number, subtrahend: number): number;
+     * }}</pre>
+     * @param tsInterface The interface declaration
+     * @return The instance of this {@link TsFile} object
+     */
     public TsFile addInterface(TsInterface tsInterface){
         return add(tsInterface);
     }

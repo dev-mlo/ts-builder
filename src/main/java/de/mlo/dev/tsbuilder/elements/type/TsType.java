@@ -7,6 +7,15 @@ import de.mlo.dev.tsbuilder.elements.common.TsModifierList;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 
+/**
+ * Examples
+ * <pre>
+ * export type User = {
+ *     name: string,
+ *     age: number,
+ * }
+ * </pre>
+ */
 @EqualsAndHashCode(callSuper = false)
 @Getter
 public class TsType extends TsElement<TsType> {
@@ -16,7 +25,12 @@ public class TsType extends TsElement<TsType> {
     private TsElement<?> value;
 
     public TsType(String name) {
+        this(name, null);
+    }
+
+    public TsType(String name, TsElement<?> value) {
         this.name = name;
+        this.value = value;
     }
 
     public TsType setExport(){

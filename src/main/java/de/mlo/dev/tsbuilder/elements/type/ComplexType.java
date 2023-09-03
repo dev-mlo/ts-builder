@@ -29,6 +29,10 @@ public class ComplexType extends TsElement<ComplexType> {
         return addAttribute(name, TsTypes.STRING);
     }
 
+    public ComplexType addNumberAttribute(String name){
+        return addAttribute(name, TsTypes.NUMBER);
+    }
+
     @Override
     public TsElementWriter<ComplexType> createWriter(TsContext context) {
         return new TsElementWriter<>(context, this) {

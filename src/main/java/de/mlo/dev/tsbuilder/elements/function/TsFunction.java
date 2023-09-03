@@ -4,6 +4,7 @@ import de.mlo.dev.tsbuilder.TsElementWriter;
 import de.mlo.dev.tsbuilder.elements.*;
 import de.mlo.dev.tsbuilder.elements.common.TsModifierList;
 import de.mlo.dev.tsbuilder.elements.interfaces.TsMethodDeclaration;
+import de.mlo.dev.tsbuilder.elements.type.TsTypes;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -39,6 +40,10 @@ public class TsFunction extends TsElementContainer<TsFunction> {
         return this;
     }
 
+    public TsFunction addStringParameter(String name) {
+        return addParameter(TsFunctionParameter.string(name));
+    }
+
     public TsFunction addContent(TsElement<?> element){
         this.contentList.add(element);
         return this;
@@ -51,6 +56,14 @@ public class TsFunction extends TsElementContainer<TsFunction> {
     public TsFunction addReturnType(TsElement<?> returnType){
         this.returnTypeList.add(returnType);
         return this;
+    }
+
+    public TsFunction addObservableReturnType(TsElement<?> observableType){
+        return addReturnType(TsTypes.observable(observableType));
+    }
+
+    public TsFunction addObservableReturnType(String observableType){
+        return addReturnType(TsTypes.observable(observableType));
     }
 
     public TsMethodDeclaration getMethodDeclaration() {
